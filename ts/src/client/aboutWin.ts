@@ -24,7 +24,7 @@ export class AboutWin {
 
         this.$win = $(win);
 
-        (<any>this.$win).jqxWindow({ width: '100%', height: 400, isModal: true });
+        (<any>this.$win).jqxWindow({ width: '90%', height: 400, isModal: true });
         this.$win.on('close', function () {
             $('.jqx-window-modal').addClass("force-hidden");
         });

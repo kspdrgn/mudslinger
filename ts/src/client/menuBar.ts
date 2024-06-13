@@ -13,7 +13,7 @@ import { ConnectWin } from "./connectWin";
 declare let configClient: any;
 
 export class MenuBar {
-    private $menuBar: JQuery;
+    public $menuBar: JQuery;
     private $chkEnableTrig: JQuery;
     private $chkEnableAlias: JQuery;
     private $chkEnableMap: JQuery;

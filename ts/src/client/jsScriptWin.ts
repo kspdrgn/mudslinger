@@ -28,7 +28,7 @@ export class JsScriptWin {
         this.$win = $(win);
         this.$runButton = $(win.getElementsByClassName("winJsScript-btnRun")[0]);
 
-        (<any>this.$win).jqxWindow({ width: '100%', height: 400, isModal: true });
+        (<any>this.$win).jqxWindow({ width: '90%', height: 400, isModal: true });
 
         this.$win.on('close', function () {
             (<any>$('.jqx-window-modal')).addClass("force-hidden");

@@ -1,31 +1,38 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 html {
-  height: 100dvh;
-  width: 100dvw;
+    height: 100dvh;
+    width: 100dvw;
 }
 
 body {
-  height: 100%;
-  width: 100%;
-  background-color: white;
+    height: 100%;
+    width: 100%;
+    background-color: white;
 }
 
 .device-mobile,
 #container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-@media (min-width: 1250px) {
+.jqx-menu-minimized,
+.jqx-menu-minimized-button {
+    float: right;
+}
+
+@media (min-width: 992px) {
     #container {
         padding: 10px;
-    }    
+    }
+
+
 }
 
 a {
@@ -98,11 +105,10 @@ a:visited {
     height: 100%;
 }
 
-.jqx-menu-minimized,
-.jqx-menu-minimized-button {
-    float: right;
-}
-
 .force-hidden {
     display: none !important;
+}
+
+.winConnect-btnConnect {
+    margin-top: 10px;
 }
