@@ -1,4 +1,4 @@
-import {JsScript} from "./jsScript";
+import { JsScript } from "./jsScript";
 
 declare let CodeMirror: any;
 
@@ -28,15 +28,24 @@ export class JsScriptWin {
         this.$win = $(win);
         this.$runButton = $(win.getElementsByClassName("winJsScript-btnRun")[0]);
 
-        (<any>this.$win).jqxWindow({width: 600, height: 400});
+        (<any>this.$win).jqxWindow({ width: '100%', height: 400, isModal: true });
+
+        this.$win.on('close', function () {
+            (<any>$('.jqx-window-modal')).addClass("force-hidden");
+        });
+
+        this.$win.on('open', function () {
+            (<any>$('.jqx-window-modal')).removeClass("force-hidden");
+        });
+
         this.codeMirror = CodeMirror.fromTextArea(
             win.getElementsByClassName("winJsScript-code")[0], {
-                mode: "javascript",
-                theme: "neat",
-                autoRefresh: true, // https://github.com/codemirror/CodeMirror/issues/3098
-                matchBrackets: true,
-                lineNumbers: true
-            }
+            mode: "javascript",
+            theme: "neat",
+            autoRefresh: true, // https://github.com/codemirror/CodeMirror/issues/3098
+            matchBrackets: true,
+            lineNumbers: true
+        }
         );
 
         this.$runButton.click(this.handleRunButtonClick.bind(this));

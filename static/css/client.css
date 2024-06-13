@@ -1,8 +1,39 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100dvh;
+  width: 100dvw;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.device-mobile,
+#container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1250px) {
+    #container {
+        padding: 10px;
+    }    
+}
+
 a {
     color: inherit;
 }
 
-a:link, a:visited {
+a:link,
+a:visited {
     text-decoration: none;
 }
 
@@ -11,8 +42,7 @@ a:link, a:visited {
 }
 
 #mudslinger {
-    width:95vw;
-    height:92vh;
+    height: 90%;
 }
 
 #mainWin {
@@ -20,37 +50,39 @@ a:link, a:visited {
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
-    height:100%;
-    width:100%;
+    height: 100%;
+    width: 100%;
 }
 
 #winOutput {
-    height:calc(100% - 21px);
-    margin:0;
-    padding:0;
+    height: calc(100% - 21px);
+    margin: 0;
+    padding: 0;
 }
 
 .outputText {
     font-size: small;
-    background-color:black;
-    font-family:"Courier", monospace;
-    color:rgb(0,187,0); /* low green */
+    background-color: black;
+    font-family: "Courier", monospace;
+    color: rgb(0, 187, 0);
+    /* low green */
     white-space: pre-wrap;
-    overflow-y:scroll;
-    overflow-x:scroll;
-    width:100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    width: 100%;
 }
 
-#cmdInput, #cmdInputPw {
-    width: 100%;
+#cmdInput,
+#cmdInputPw {
     margin: 0;
     padding: 0;
 }
 
 #cmdInput {
     resize: none;
-    font-family:"Courier", monospace;
-    font-size: small;
+    font-family: "Courier", monospace;
+    /* font-size: small; */
+    height: 30px;
 }
 
 #cmdInputPw {
@@ -64,4 +96,13 @@ a:link, a:visited {
 .winEdit-listBox {
     width: 100%;
     height: 100%;
+}
+
+.jqx-menu-minimized,
+.jqx-menu-minimized-button {
+    float: right;
+}
+
+.force-hidden {
+    display: none !important;
 }

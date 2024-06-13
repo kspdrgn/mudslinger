@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
+  <meta name="msapplication-tap-highlight" content="no" />
   <link rel="icon" type="image/ico" href="favicon.ico">
   <link rel="stylesheet" href="jqwidgets/styles/jqx.base.css">
 
@@ -17,6 +20,7 @@
 
   <link rel="stylesheet" href="codemirror/lib/codemirror.css">
   <link rel="stylesheet" href="codemirror/theme/neat.css">
+  <link rel="stylesheet" href="jqwidgets/styles/jqx.mobile.css" type="text/css" />
   <script src="codemirror/lib/codemirror.js"></script>
   <script src="codemirror/addon/display/autorefresh.js"></script>
   <script src="codemirror/mode/javascript/javascript.js"></script>
@@ -29,52 +33,58 @@
 
   <script>
     var myClient;
-    $(document).ready(function() {
+    $(document).ready(function () {
       myClient = new Mudslinger.Client();
       document.title = myClient.AppInfo.AppTitle;
     }); 
   </script>
 </head>
-<body>
-<div id="mudslinger">
-  <div id="menuBar">
-    <ul>
-      <li id=menuBar-conn-disconn>Connect</li>
-      <li>Aliases</li>
-      <li>Triggers</li>
-      <li>Script</li>
-      <li>Config
-        <ul>
-          <li>Text Color
-            <ul>
-              <li>White on Black</li>
-              <li>Green on Black</li>
-              <li>Black on Grey</li>
-              <li>Black on White</li>
-            </ul>
-          </li>
-          <li><label><input id="menuBar-chkEnableTrig" type="checkbox" checked>Enable Triggers</label></li>
-          <li><label><input id="menuBar-chkEnableAlias" type="checkbox" checked>Enable Aliases</label></li>
-          
-          <li type="separator"></li>
-          
-          <li>Import</li>
-          <li>Export</li>
-        </ul>
-      </li>
-      <li>Help
-        <ul>
-          <li>About</li>
-        </ul>
-      </li>
-    </ul>
+
+<body class='default'>
+  <div class="device-mobile">
+    <div id="container" class="device-mobile-container">
+      <div id="mudslinger">
+        <div id="menuBar">
+          <ul>
+            <li id=menuBar-conn-disconn>Connect</li>
+            <li>Aliases</li>
+            <li>Triggers</li>
+            <li>Script</li>
+            <li>Config
+              <ul>
+                <li>Text Color
+                  <ul>
+                    <li>White on Black</li>
+                    <li>Green on Black</li>
+                    <li>Black on Grey</li>
+                    <li>Black on White</li>
+                  </ul>
+                </li>
+                <li><label><input id="menuBar-chkEnableTrig" type="checkbox" checked>Enable Triggers</label></li>
+                <li><label><input id="menuBar-chkEnableAlias" type="checkbox" checked>Enable Aliases</label></li>
+
+                <li type="separator"></li>
+
+                <li>Import</li>
+                <li>Export</li>
+              </ul>
+            </li>
+            <li>Help
+              <ul>
+                <li>About</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div id="mainWin">
+          <pre id="winOutput" class="outputText"></pre>
+          <!--<br>-->
+          <textarea rows="1" id="cmdInput"></textarea>
+          <input id="cmdInputPw" type="password" style="display:none">
+        </div>
+      </div>
+    </div>
   </div>
-  <div id="mainWin">
-    <pre id="winOutput" class="outputText"></pre>
-    <!--<br>-->
-    <textarea rows="1" id="cmdInput"></textarea>
-    <input id="cmdInputPw" type="password" style="display:none">
-  </div>
-</div>
 </body>
+
 </html>

@@ -93,7 +93,7 @@ export class Socket {
         });
     }
 
-    public openTelnet(host: string, port: number) {
+    public openTelnet(host: string | null, port: number) {
         this.ioEvt.clReqTelnetOpen.fire([host, port]);
     }
 

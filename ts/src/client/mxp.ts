@@ -106,6 +106,7 @@ export class Mxp {
                     let color = this.outputManager.getFgColor() || elem.css("color");
                     elem.css("border-bottom", "1px solid " + color);
                     elem.click(() => {
+                        // @ts-ignore: Object is possibly 'null'.
                         GlEvent.sendCommand.fire({value: tag_m[1]});
                     });
                     this.openTags.push("send");
@@ -135,7 +136,7 @@ export class Mxp {
                 } else {
                     this.openTags.pop();
                     let elem = this.outputManager.popMxpElem();
-                    if (!elem[0].hasAttribute("title")) {
+                    if (elem && !elem[0].hasAttribute("title")) {
                         /* didn"t have explicit href so we need to do it here */
                         let txt = elem.text();
                         elem[0].setAttribute("title", txt);
@@ -155,7 +156,8 @@ export class Mxp {
         let handled = false;
         for (let i = 0; i < this.tagHandlers.length; i++) {
             /* tag handlers will return true if it"s a match */
-            if (this.tagHandlers[i](data)) {
+            let res = this.tagHandlers[i](data);
+            if (res != null) {
                 handled = true;
                 break;
             }

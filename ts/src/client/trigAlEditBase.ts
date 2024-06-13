@@ -90,23 +90,31 @@ export abstract class TrigAlEditBase {
         this.$scriptArea = $(myDiv.getElementsByClassName("winEdit-scriptArea")[0]);
 
 
-        (<any>this.$win).jqxWindow({width: 600, height: 400});
+        (<any>this.$win).jqxWindow({ width: '100%', height: 400, isModal: true });
+
+        this.$win.on('close', function () {
+            (<any>$('.jqx-window-modal')).addClass("force-hidden");
+        });
+
+        this.$win.on('open', function () {
+            (<any>$('.jqx-window-modal')).removeClass("force-hidden");
+        });
 
         (<any>this.$mainSplit).jqxSplitter({
             width: "100%",
             height: "100%",
             orientation: "vertical",
-            panels: [{size: "25%"}, {size: "75%"}]
+            panels: [{ size: "25%" }, { size: "75%" }]
         });
 
         this.codeMirror = CodeMirror.fromTextArea(
             this.$scriptArea[0], {
-                mode: "javascript",
-                theme: "neat",
-                autoRefresh: true, // https://github.com/codemirror/CodeMirror/issues/3098
-                matchBrackets: true,
-                lineNumbers: true
-            }
+            mode: "javascript",
+            theme: "neat",
+            autoRefresh: true, // https://github.com/codemirror/CodeMirror/issues/3098
+            matchBrackets: true,
+            lineNumbers: true
+        }
         );
         this.$codeMirrorWrapper = $(this.codeMirror.getWrapperElement());
         this.$codeMirrorWrapper.height("100%");
@@ -246,7 +254,7 @@ export abstract class TrigAlEditBase {
     /* To be called if underlying data changes outside of this class logic (config import, for example) */
     protected onDataChange() {
         // if ((<any>this.$win).jqxWindow("isOpen")) {
-            this.updateListBox();
+        this.updateListBox();
         // }
     }
 }

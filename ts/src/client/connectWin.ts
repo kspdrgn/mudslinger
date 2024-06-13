@@ -27,7 +27,7 @@ export class ConnectWin {
             Port:
             <input class="winConnect-inputPort">
             <br>
-            <button class="winConnect-btnConnect" style="height:10%">CONNECT</button>
+            <button class="winConnect-btnConnect">CONNECT</button>
         </div>
         `;
 
@@ -36,7 +36,17 @@ export class ConnectWin {
         this.$hostInput = $(win.getElementsByClassName("winConnect-inputHost")[0]);
         this.$portInput = $(win.getElementsByClassName("winConnect-inputPort")[0]);
 
-        (<any>this.$win).jqxWindow({width: 600, height: 400});
+        (<any>this.$win).jqxWindow({ isModal: true });
+
+        this.$win.on('close', function () {
+            (<any>$('.jqx-window-modal')).addClass("force-hidden");
+        });
+
+        this.$win.on('open', function () {
+            (<any>$('.jqx-window-modal')).removeClass("force-hidden");
+        });
+
+
 
         this.$connectButton.click(this.handleConnectButtonClick.bind(this));
     }
