@@ -1,10 +1,23 @@
 {
     "compilerOptions": {
-        "outDir": "../dist",
-        "noImplicitAny": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "paths": {
+            "*": [
+                "./src/server/*",
+                "../node_modules/*",
+                "/definitions/*",
+                "../configServer.js",
+            ]
+        },
+        "rootDir": ".",
+        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "noImplicitAny": false,
         "noImplicitReturns": true,
-        "module": "esnext",
-        "moduleResolution": "node"
+        "outDir": "dist",
+        "target": "ES2017",
     },
     "include": [
         "./src/server/*"

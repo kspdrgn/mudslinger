@@ -1,11 +1,19 @@
-import * as express from "express";
+import express from "express";
 import * as http from "http";
 import * as socketio from "socket.io";
 import * as net from "net";
 
-import { IoEvent } from "../shared/ioevent";
+import IoEvent from "../shared/ioevent.js";
 
-let serverConfig = require("../../configServer.js");
+interface ServerConfigType {
+    useHttpServer: boolean | undefined
+    serverPort: number | undefined
+    targetHost: string | undefined
+    targetPort: number | undefined
+}
+
+const serverConfig = (await import("../../configServer.js")).default;
+
 console.log(serverConfig);
 
 let cwd = process.cwd();

@@ -1,6 +1,5 @@
 class IoEventHook<TData> {
-    constructor(private ioObj: any, private evtName: string) {
-
+    constructor(private readonly ioObj: any, private readonly evtName: string) {
     }
     
     public handle(callback: (data: TData) => void) {
@@ -13,8 +12,10 @@ class IoEventHook<TData> {
 }
 
 export class IoEvent {
-    constructor(private ioOobj: any) {
+    constructor(ioOobj: any) {
+        this.ioOobj = ioOobj;
     }
+    ioOobj: any = undefined;
 
     public srvTelnetData = new IoEventHook<ArrayBuffer>(this.ioOobj, "srvTelnetData");
     public srvTelnetClosed = new IoEventHook<boolean>(this.ioOobj, "srvTelnetClosed");
@@ -26,3 +27,5 @@ export class IoEvent {
     public clReqTelnetClose = new IoEventHook<void>(this.ioOobj, "clReqTelnetClose");
     public clReqTelnetWrite = new IoEventHook<ArrayBuffer>(this.ioOobj, "clReqTelnetWrite");
 }
+
+export default IoEvent;

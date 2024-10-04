@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "target": "es6",
         "outDir": "./build/build_client",
         "noImplicitAny": true,

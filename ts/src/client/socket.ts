@@ -54,7 +54,7 @@ export class Socket {
                 this.handleTelnetData(data);
             });
 
-            this.telnetClient.EvtServerEcho.handle((data) => {
+            this.telnetClient.EvtServerEcho.handle((data: any) => {
                 // Server echo ON means we should have local echo OFF
                 GlEvent.setEcho.fire(!data);
             });
@@ -67,11 +67,11 @@ export class Socket {
             GlEvent.telnetDisconnect.fire();
         });
 
-        this.ioEvt.srvTelnetError.handle((data) => {
+        this.ioEvt.srvTelnetError.handle((data: any) => {
             GlEvent.telnetError.fire(data);
         });
 
-        this.ioEvt.srvTelnetData.handle((data) => {
+        this.ioEvt.srvTelnetData.handle((data: any) => {
             if (this.telnetClient) {
                 this.telnetClient.handleData(data);
             }

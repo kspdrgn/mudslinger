@@ -18,3 +18,5 @@ config.targetPort = null;
 
 
 module.exports = config;
+
+export default config;
