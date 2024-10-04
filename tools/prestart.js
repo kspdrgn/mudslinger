@@ -1,4 +1,4 @@
-let fs = require("fs");
+import fs from "fs";
 
 // To be run from package root, paths accordingly
 let flnameConfigClient = "configClient.js";

@@ -1,4 +1,4 @@
-let fs = require("fs-extra");
+import fs from "fs-extra";
 
 let flnameConfigClient = "configClient.js"
 let flnameConfigClientDefault = "configClient.default.js"
@@ -12,13 +12,12 @@ fs.createReadStream("node_modules/jquery/dist/jquery.min.js").pipe(fs.createWrit
 
 fs.copySync("node_modules/jqwidgets-framework/jqwidgets", "static/jqwidgets");
 
-fs.copySync("node_modules/codemirror/addon", "static/codemirror/addon");
-fs.copySync("node_modules/codemirror/keymap", "static/codemirror/keymap");
-fs.copySync("node_modules/codemirror/lib", "static/codemirror/lib");
-fs.copySync("node_modules/codemirror/mode", "static/codemirror/mode");
-fs.copySync("node_modules/codemirror/theme", "static/codemirror/theme");
-
-fs.copySync("node_modules/codemirror/LICENSE", 'static/codemirror/LICENSE');
+//fs.copySync("node_modules/codemirror/addon", "static/codemirror/addon");
+//fs.copySync("node_modules/codemirror/keymap", "static/codemirror/keymap");
+//fs.copySync("node_modules/codemirror/lib", "static/codemirror/lib");
+//fs.copySync("node_modules/codemirror/mode", "static/codemirror/mode");
+//fs.copySync("node_modules/codemirror/theme", "static/codemirror/theme");
+//fs.copySync("node_modules/codemirror/LICENSE", 'static/codemirror/LICENSE');
 
 // Don't want to overwrite existing config file if any
 if (!fs.existsSync(flnameConfigClient)) {

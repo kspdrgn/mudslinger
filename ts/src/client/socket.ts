@@ -1,6 +1,6 @@
 import { GlEvent, GlDef } from "./event";
 
-import * as io from "socket.io-client";
+import { Manager, Socket as SocketIOSocket } from "socket.io-client";
 import { Mxp } from "./mxp";
 import { OutputManager } from "./outputManager";
 import { IoEvent } from "../shared/ioevent";
@@ -11,9 +11,9 @@ declare let configClient: any;
 
 
 export class Socket {
-    private ioConn: SocketIOClient.Socket;
+    private ioConn: SocketIOSocket;
     private ioEvt: IoEvent;
-    private telnetClient: TelnetClient;
+    private telnetClient: TelnetClient | null;
     private clientIp: string;
 
     constructor(private outputManager: OutputManager, private mxp: Mxp) {
@@ -25,19 +25,17 @@ export class Socket {
     }
 
     public open() {
-        this.ioConn = io.connect(
-            "http://" +
-            (configClient.socketIoHost || document.domain) +
-            ":" +
-            (configClient.socketIoPort || location.port) +
-            "/telnet");
+        const url = `http://${configClient.socketIoHost || document.domain}:${configClient.socketIoPort || location.port}/telnet`;
+        const m = new Manager(url);
+        const i = m.socket("/telnet") as SocketIOSocket;
+        this.ioConn = i.connect();
 
         this.ioConn.on("connect", () => {
-            GlEvent.wsConnect.fire(null);
+            GlEvent.wsConnect.fire();
         });
 
         this.ioConn.on("disconnect", () => {
-            GlEvent.wsDisconnect.fire(null);
+            GlEvent.wsDisconnect.fire();
         });
 
         this.ioConn.on("error", (msg: any) => {
@@ -61,12 +59,12 @@ export class Socket {
                 GlEvent.setEcho.fire(!data);
             });
 
-            GlEvent.telnetConnect.fire(null);
+            GlEvent.telnetConnect.fire();
         });
 
         this.ioEvt.srvTelnetClosed.handle(() => {
             this.telnetClient = null;
-            GlEvent.telnetDisconnect.fire(null);
+            GlEvent.telnetDisconnect.fire();
         });
 
         this.ioEvt.srvTelnetError.handle((data) => {
@@ -94,11 +92,13 @@ export class Socket {
     }
 
     public openTelnet(host: string | null, port: number) {
+        if (host === null || !port)
+            return;
         this.ioEvt.clReqTelnetOpen.fire([host, port]);
     }
 
     public closeTelnet() {
-        this.ioEvt.clReqTelnetClose.fire(null);
+        this.ioEvt.clReqTelnetClose.fire();
     }
 
     private sendCmd(cmd: string) {
@@ -130,7 +130,7 @@ export class Socket {
         }
     };
 
-    private partialSeq: string;
+    private partialSeq: string | null;
     private handleTelnetData(data: ArrayBuffer) {
         // console.timeEnd("command_resp");
         // console.time("_handle_telnet_data");

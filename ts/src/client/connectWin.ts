@@ -32,9 +32,9 @@ export class ConnectWin {
         `;
 
         this.$win = $(win);
-        this.$connectButton = $(win.getElementsByClassName("winConnect-btnConnect")[0]);
-        this.$hostInput = $(win.getElementsByClassName("winConnect-inputHost")[0]);
-        this.$portInput = $(win.getElementsByClassName("winConnect-inputPort")[0]);
+        this.$connectButton = $(win.getElementsByClassName("winConnect-btnConnect")[0]) as JQuery<HTMLButtonElement>;
+        this.$hostInput = $(win.getElementsByClassName("winConnect-inputHost")[0]) as JQuery<HTMLInputElement>;
+        this.$portInput = $(win.getElementsByClassName("winConnect-inputPort")[0]) as JQuery<HTMLInputElement>;
 
         (<any>this.$win).jqxWindow({ isModal: true });
 
@@ -52,8 +52,8 @@ export class ConnectWin {
     }
 
     private handleConnectButtonClick() {
-        let host: string = this.$hostInput.val().trim();
-        let port: number = this.$portInput.val().trim();
+        let host: string = (this.$hostInput.val() as string).trim();
+        let port: number = +((this.$portInput.val() as string).trim());
 
         this.socket.openTelnet(host, port);
 

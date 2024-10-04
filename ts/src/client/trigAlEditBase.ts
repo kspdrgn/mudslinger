@@ -12,19 +12,19 @@ export interface TrigAlItem {
 export abstract class TrigAlEditBase {
     protected $win: JQuery;
 
-    protected $listBox: JQuery;
-    protected $pattern: JQuery;
-    protected $regexCheckbox: JQuery;
-    protected $scriptCheckbox: JQuery;
-    protected $textArea: JQuery;
-    protected $scriptArea: JQuery;
+    protected $listBox: JQuery<Element>;
+    protected $pattern: JQuery<Element>;
+    protected $regexCheckbox: JQuery<Element>;
+    protected $scriptCheckbox: JQuery<Element>;
+    protected $textArea: JQuery<Element>;
+    protected $scriptArea: JQuery<Element>;
     protected codeMirror: any;
-    protected $codeMirrorWrapper: JQuery;
-    protected $newButton: JQuery;
-    protected $deleteButton: JQuery;
-    protected $mainSplit: JQuery;
-    protected $saveButton: JQuery;
-    protected $cancelButton: JQuery;
+    protected $codeMirrorWrapper: JQuery<Element>;
+    protected $newButton: JQuery<Element>;
+    protected $deleteButton: JQuery<Element>;
+    protected $mainSplit: JQuery<Element>;
+    protected $saveButton: JQuery<Element>;
+    protected $cancelButton: JQuery<Element>;
 
     /* these need to be overridden */
     protected abstract getList(): Array<string>;
@@ -166,7 +166,7 @@ export abstract class TrigAlEditBase {
 
         this.saveItem(
             ind,
-            this.$pattern.val(),
+            this.$pattern.val() as string,
             is_script ? this.codeMirror.getValue() : this.$textArea.val(),
             this.$regexCheckbox.is(":checked"),
             is_script

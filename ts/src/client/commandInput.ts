@@ -6,16 +6,16 @@ export class CommandInput {
     private cmd_history: string[] = [];
     private cmd_index: number = -1;
 
-    private $cmdInput: JQuery;
-    private $cmdInputPw: JQuery;
+    private $cmdInput: JQuery<HTMLInputElement>;
+    private $cmdInputPw: JQuery<HTMLInputElement>;
 
     constructor(private aliasManager: AliasManager) {
         this.$cmdInput = $("#cmdInput");
         this.$cmdInputPw = $("#cmdInputPw");
 
-        this.$cmdInput.keydown((event: KeyboardEvent) => { return this.keydown(event); });
-        this.$cmdInput.bind("input propertychange", () => { return this.inputChange(); });
-        this.$cmdInputPw.keydown((event: KeyboardEvent) => { return this.pwKeydown(event); });
+        this.$cmdInput.on('keydown', event => { return this.keydown(event); });
+        this.$cmdInput.on('input propertychange', () => { return this.inputChange(); });
+        this.$cmdInputPw.on('keydown', event => { return this.pwKeydown(event); });
 
         GlEvent.setEcho.handle(this.handleSetEcho, this);
         GlEvent.telnetConnect.handle(this.handleTelnetConnect, this);
@@ -37,7 +37,7 @@ export class CommandInput {
             this.$cmdInputPw.show();
             this.$cmdInputPw.focus();
 
-            let current = this.$cmdInput.val();
+            let current = this.$cmdInput.val() as string;
             if (this.cmd_history.length > 0
                 && current !== this.cmd_history[this.cmd_history.length - 1]) {
                 /* If they already started typing password before getting echo command*/
@@ -54,12 +54,12 @@ export class CommandInput {
     }
 
     private sendPw(): void {
-        let pw = this.$cmdInputPw.val();
+        let pw = this.$cmdInputPw.val() as string;
         GlEvent.sendPw.fire(pw);
     }
 
     private sendCmd(): void {
-        let cmd: string = this.$cmdInput.val();
+        let cmd: string = this.$cmdInput.val() as string;
         let result = this.aliasManager.checkAlias(cmd);
         if (!result) {
             let cmds = cmd.split(";");
@@ -96,7 +96,7 @@ export class CommandInput {
         this.cmd_index = -1;
     };
 
-    private pwKeydown(event: KeyboardEvent): boolean {
+    private pwKeydown(event: JQuery.KeyDownEvent): boolean {
         switch (event.which) {
             case 13: // enter
                 this.sendPw();
@@ -107,7 +107,7 @@ export class CommandInput {
         }
     }
 
-    private keydown(event: KeyboardEvent): boolean {
+    private keydown(event: JQuery.KeyDownEvent): boolean {
         switch (event.which) {
             case 13: // enter
                 if (event.shiftKey) {

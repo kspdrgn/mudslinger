@@ -26,7 +26,7 @@ export class JsScriptWin {
         `;
 
         this.$win = $(win);
-        this.$runButton = $(win.getElementsByClassName("winJsScript-btnRun")[0]);
+        this.$runButton = $(win.getElementsByClassName("winJsScript-btnRun")[0]) as JQuery<HTMLButtonElement>;
 
         (<any>this.$win).jqxWindow({ width: '90%', height: 400, isModal: true });
 
