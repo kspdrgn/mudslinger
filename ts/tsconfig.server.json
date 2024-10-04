@@ -5,10 +5,9 @@
         "paths": {
             "*": [
                 "./src/server/*",
-                "../node_modules/*",
-                "/definitions/*",
-                "../configServer.js",
-            ]
+                //"../node_modules/*",
+                "/definitions/*"
+            ],
         },
         "rootDir": ".",
         "esModuleInterop": true,
@@ -16,10 +15,13 @@
         "moduleResolution": "Node",
         "noImplicitAny": false,
         "noImplicitReturns": true,
-        "outDir": "dist",
+        "outDir": "../dist",
         "target": "ES2017",
     },
     "include": [
         "./src/server/*"
+    ],
+    "exclude": [
+        "node_modules"
     ]
 }

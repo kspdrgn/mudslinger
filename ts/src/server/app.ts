@@ -1,3 +1,4 @@
+import fs from "fs";
 import express from "express";
 import * as http from "http";
 import * as socketio from "socket.io";
@@ -12,7 +13,21 @@ interface ServerConfigType {
     targetPort: number | undefined
 }
 
-const serverConfig = (await import("../../configServer.js")).default;
+const serverConfig: ServerConfigType = {    
+    /* If false, only serve socket.io and not http */
+    useHttpServer: true,
+
+    /* http server port if useHttpServer is true, else the socket.io port */
+    serverPort: 8008,
+
+    /* targetHost and targetPort set as null means client can connect to any host/port.
+    Set these values to hardcode the connection to a specific host and port 
+
+    If hardcoding a target, be sure to also set hardcodedTarget to true in configClient.js
+    */
+    targetHost: undefined,
+    targetPort: undefined,
+};
 
 console.log(serverConfig);
 

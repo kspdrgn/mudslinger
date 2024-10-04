@@ -3,8 +3,8 @@ import fs from "fs-extra";
 let flnameConfigClient = "configClient.js"
 let flnameConfigClientDefault = "configClient.default.js"
 
-let flnameConfigServer = "configServer.js"
-let flnameConfigServerDefault = "configServer.default.js"
+let flnameConfigServer = "ts/configServer.js"
+let flnameConfigServerDefault = "ts/configServer.default.js"
 
 // To be run from package root, paths accordingly
 fs.createReadStream("node_modules/socket.io-client/dist/socket.io.min.js").pipe(fs.createWriteStream('static/socket.io.min.js'));

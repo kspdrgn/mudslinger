@@ -5,7 +5,7 @@ var config = {};
 config.useHttpServer = true;
 
 /* http server port if useHttpServer is true, else the socket.io port */
-config.serverPort = 80;
+config.serverPort = 8008;
 
 
 /* targetHost and targetPort set as null means client can connect to any host/port.
