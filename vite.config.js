@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
     root: 'static',
     base: '/',
-    publicDir: false,
+    publicDir: true,
     plugins: [],
     server: {
         port: 8008,

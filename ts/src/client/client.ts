@@ -1,6 +1,7 @@
 /// <reference path="../../definitions/polyfill.d.ts" />
 
-import { GlEvent } from "./event";
+import "libs";
+
 import { UserConfig } from "./userConfig";
 import { AppInfo } from "./appInfo";
 
@@ -67,9 +68,7 @@ export class Client {
         this.loadLayout();
 
         // Prevent navigating away accidentally
-        window.onbeforeunload = () => {
-            return "";
-        };
+        window.onbeforeunload = () => '';
 
         this.socket.open();
         if (configClient.hardcodedTarget === true) {

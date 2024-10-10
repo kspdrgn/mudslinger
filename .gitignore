@@ -8,3 +8,6 @@ static/jquery.min.js
 static/mudslinger.js
 static/socket.io.min.js
 .vs/
+public/jqwidgets
+public/jquery.min.js
+public/codemirror-theme-one-dark.js

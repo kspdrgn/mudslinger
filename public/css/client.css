@@ -1,0 +1,114 @@
+html,
+body {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    height: 100dvh;
+    width: 100dvw;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+}
+
+.device-mobile,
+#container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.jqx-menu-minimized,
+.jqx-menu-minimized-button {
+    float: right;
+}
+
+@media (min-width: 992px) {
+    #container {
+        padding: 10px;
+    }
+
+
+}
+
+a {
+    color: inherit;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+}
+
+.CodeMirror {
+    border: 1px solid black;
+}
+
+#mudslinger {
+    height: 90%;
+}
+
+#mainWin {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+#winOutput {
+    height: calc(100% - 21px);
+    margin: 0;
+    padding: 0;
+}
+
+.outputText {
+    font-size: small;
+    background-color: black;
+    font-family: "Courier", monospace;
+    color: rgb(0, 187, 0);
+    /* low green */
+    white-space: pre-wrap;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    width: 100%;
+}
+
+#cmdInput,
+#cmdInputPw {
+    margin: 0;
+    padding: 0;
+}
+
+#cmdInput {
+    resize: none;
+    font-family: "Courier", monospace;
+    /* font-size: small; */
+    height: 30px;
+}
+
+#cmdInputPw {
+    height: 20px;
+}
+
+.winEdit-pattern {
+    width: 100%;
+}
+
+.winEdit-listBox {
+    width: 100%;
+    height: 100%;
+}
+
+.force-hidden {
+    display: none !important;
+}
+
+.winConnect-btnConnect {
+    margin-top: 10px;
+}
