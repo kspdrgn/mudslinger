@@ -49,7 +49,7 @@ export class AliasManager {
     // return null if no match
     public checkAlias(cmd: string): boolean | string | undefined {
         if (!this.enabled)
-            return;
+            return undefined;
 
         for (let i = 0; i < this.aliases.length; i++) {
             let alias = this.aliases[i];
@@ -90,6 +90,6 @@ export class AliasManager {
                 }
             }
         }
-        return;
+        return undefined;
     };
 }

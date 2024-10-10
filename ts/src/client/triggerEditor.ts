@@ -1,4 +1,4 @@
-import { TrigAlEditBase } from "./trigAlEditBase";
+import { TrigAlEditBase, TrigAlItem } from "./trigAlEditBase";
 import { TriggerManager } from "./triggerManager";
 
 export class TriggerEditor extends TrigAlEditBase {
@@ -41,10 +41,10 @@ export class TriggerEditor extends TrigAlEditBase {
         return lst;
     }
 
-    protected getItem(ind: number) {
+    protected getItem(ind: number): TrigAlItem | undefined {
         let triggers = this.triggerManager.triggers;
         if (!triggers || ind < 0 || ind >= triggers.length) {
-            return;
+            return undefined;
         } else {
             return triggers[ind];
         }

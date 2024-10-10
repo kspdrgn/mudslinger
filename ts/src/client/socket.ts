@@ -11,9 +11,9 @@ declare let configClient: any;
 
 
 export class Socket {
-    private ioConn: SocketIOSocket;
+    private ioConn: SocketIOSocket | undefined;
     private ioEvt: IoEvent;
-    private telnetClient: TelnetClient | null;
+    private telnetClient: TelnetClient | undefined;
     private clientIp: string;
 
     constructor(private outputManager: OutputManager, private mxp: Mxp) {
@@ -25,10 +25,19 @@ export class Socket {
     }
 
     public open() {
-        const url = `http://${configClient.socketIoHost || document.domain}:${configClient.socketIoPort || location.port}/telnet`;
-        const m = new Manager(url);
+        const host = configClient.socketIoHost || document.domain;
+        const port = configClient.socketIoPort || location.port;
+        const url = `http://${host}:${port}/telnet`;
+        const m = new Manager(url, {
+            autoConnect: false,
+        });
         const i = m.socket("/telnet");
-        this.ioConn = i.connect();
+        this.ioConn = i.connect() as SocketIOSocket | undefined;
+
+        if (!this.ioConn) {
+            alert('Could not setup connection');
+            return;
+        }
 
         this.ioConn.on("connect", () => {
             GlEvent.wsConnect.fire();

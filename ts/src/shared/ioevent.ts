@@ -3,11 +3,11 @@ class IoEventHook<TData> {
     }
     
     public handle(callback: (data: TData) => void) {
-        return this.ioObj.on(this.evtName, callback);
+        return this.ioObj?.on(this.evtName, callback);
     }
 
     public fire(data: TData): boolean {
-        return this.ioObj.emit(this.evtName, data);
+        return this.ioObj?.emit(this.evtName, data);
     }
 }
 

@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 
-let flnameConfigClient = "configClient.js"
+let flnameConfigClient = "public/configClient.js"
 let flnameConfigClientDefault = "configClient.default.js"
 
 let flnameConfigServer = "configServer.js"

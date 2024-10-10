@@ -15,11 +15,11 @@
     "prestart": "node tools/prestart.js",
     "start": "node dist/src/server/app.js",
     "postinstall": "node tools/postinstall.js",
-    "clean": "rimraf ts/build && rimraf dist && rimraf static/mudslinger.js",
+    "clean": "rimraf ts/build && rimraf dist && rimraf static/dist && rimraf static/codemirror && rimraf static/jqwidgets",
     "build": "npm run build-client && npm run build-server",
     "build-client": "vite build --config vite.config.js",
     "build-server": "tsc -p ts/tsconfig.server.json",
-    "vite": "vite --config vite.config.js",
+    "vite": "vite --config vite.config.mts",
     "lint": "tslint -c ts/tslint.json ts/src/client/*.ts && tslint -c ts/tslint.json ts/src/server/*.ts",
     "watch": "npm-watch"
   },

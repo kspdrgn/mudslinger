@@ -41,10 +41,10 @@ export class AliasEditor extends TrigAlEditBase {
         return lst;
     }
 
-    protected getItem(ind: number) {
+    protected getItem(ind: number): TrigAlItem | undefined {
         let aliases = this.aliasManager.aliases;
         if (ind < 0 || ind >= aliases.length) {
-            return;
+            return undefined;
         } else {
             return aliases[ind];
         }

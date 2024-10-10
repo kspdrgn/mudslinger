@@ -1,7 +1,5 @@
 /// <reference path="../../definitions/polyfill.d.ts" />
 
-import "libs";
-
 import { UserConfig } from "./userConfig";
 import { AppInfo } from "./appInfo";
 
@@ -98,3 +96,7 @@ export class Client {
     public readonly AppInfo = AppInfo;
 }
 
+$(() => {
+  const client = new Client();
+  document.title = client.AppInfo.AppTitle;
+});

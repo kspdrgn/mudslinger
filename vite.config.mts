@@ -2,11 +2,15 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-    root: 'static',
+    root: '.',
+    appType: 'spa',
     base: '/',
-    publicDir: true,
+    publicDir: 'public',
     plugins: [],
     server: {
         port: 8008,
+    },
+    build: {
+        sourcemap: true,
     },
 });
