@@ -20,8 +20,8 @@ export class OutputManager {
 
     private ansiReverse = false;
 
-    private ansiFg: ansiColorTuple;
-    private ansiBg: ansiColorTuple;
+    private ansiFg: ansiColorTuple | undefined;
+    private ansiBg: ansiColorTuple | undefined;
 
     private fgColor: string;
     private bgColor: string;
@@ -88,24 +88,28 @@ export class OutputManager {
         this.target.addText(data);
     }
 
-    private setFgColor(color: string) {
+    private setFgColor(color: string | undefined) {
+        if (!color)
+            return;
         this.fgColor = color;
         this.target.setFgColor(color);
     }
 
     private setAnsiFg(color: ansiColorTuple) {
         this.ansiFg = color;
-        this.setFgColor(this.ansiFg ? (ansiColors[this.ansiFg[0]][this.ansiFg[1]]) : null);
+        this.setFgColor(this.ansiFg ? (ansiColors[this.ansiFg[0]][this.ansiFg[1]]) : undefined);
     }
 
-    private setBgColor(color: string) {
+    private setBgColor(color: string | undefined) {
+        if (!color)
+            return;
         this.bgColor = color;
         this.target.setBgColor(color);
     }
 
     private setAnsiBg(color: ansiColorTuple) {
         this.ansiBg = color;
-        this.setBgColor(this.ansiBg ? (ansiColors[this.ansiBg[0]][this.ansiBg[1]]) : null);
+        this.setBgColor(this.ansiBg ? (ansiColors[this.ansiBg[0]][this.ansiBg[1]]) : undefined);
     }
 
     public getFgColor(): string {
@@ -125,18 +129,18 @@ export class OutputManager {
         let html_color = xterm_cols[color_code];
 
         if (is_bg) {
-            this.ansiBg = null;
+            this.ansiBg = undefined;
             this.setBgColor(html_color);
         } else {
-            this.ansiFg = null;
+            this.ansiFg = undefined;
             this.setFgColor(html_color);
         }
     }
 
     /* handles graphics mode codes http://ascii-table.com/ansi-escape-sequences.php*/
     public handleAnsiGraphicCodes(codes: Array<string>) {
-        let new_fg: ansiColorTuple;
-        let new_bg: ansiColorTuple;
+        let new_fg: ansiColorTuple | undefined;
+        let new_bg: ansiColorTuple | undefined;;
 
         for (let i = 0; i < codes.length; i++) {
 
@@ -144,8 +148,8 @@ export class OutputManager {
 
             /* all off */
             if (code === 0) {
-                new_fg = null;
-                new_bg = null;
+                new_fg = undefined;
+                new_bg = undefined;
                 this.ansiReverse = false;
                 continue;
             }
@@ -188,7 +192,7 @@ export class OutputManager {
                 /* other clients seem to cancel reverse on any color change... */
                 if (this.ansiReverse) {
                     this.ansiReverse = false;
-                    new_bg = null;
+                    new_bg = undefined;
                 }
 
                 let color_name = ansiFgLookup[code];
@@ -202,7 +206,7 @@ export class OutputManager {
                 /* other clients seem to cancel reverse on any color change... */
                 if (this.ansiReverse) {
                     this.ansiReverse = false;
-                    new_fg = null;
+                    new_fg = undefined;
                 }
 
                 let color_name = ansiBgLookup[code];

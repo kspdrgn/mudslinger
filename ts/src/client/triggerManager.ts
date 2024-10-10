@@ -10,7 +10,7 @@ export class TriggerManager {
     public evtTriggersChanged = new EventHook<void>();
 
     private enabled: boolean = true;
-    public triggers: Array<TrigAlItem> = null;
+    public triggers: Array<TrigAlItem> | undefined = undefined;
 
     constructor(private jsScript: JsScript) {
         /* backward compatibility */
@@ -35,9 +35,9 @@ export class TriggerManager {
     }
 
     private handleConfigImport(imp: {[k: string]: any}) {
-        this.triggers = this.triggers.concat(imp["triggers"] || []);
+        this.triggers = this.triggers?.concat(imp["triggers"] || []);
         this.saveTriggers();
-        this.evtTriggersChanged.fire(null);
+        this.evtTriggersChanged.fire();
     }
 
     private handleSetTriggersEnabled(data: GlDef.SetTriggersEnabledData) {
@@ -45,18 +45,19 @@ export class TriggerManager {
     }
 
     public handleLine(line: string) {
-        if (!this.enabled) return;
+        if (!this.enabled || !this.triggers)
+            return;
 //        console.log("TRIGGER: " + line);
         for (let i = 0; i < this.triggers.length; i++) {
-            let trig = this.triggers[i];
+            const trig = this.triggers[i];
             if (trig.regex) {
-                let match = line.match(trig.pattern);
+                const match = line.match(trig.pattern);
                 if (!match) {
                     continue;
                 }
 
                 if (trig.is_script) {
-                    let script = this.jsScript.makeScript(trig.value);
+                    const script = this.jsScript.makeScript(trig.value);
                     if (script) { script(); };
                 } else {
                     let value = trig.value;
@@ -65,16 +66,16 @@ export class TriggerManager {
                         return match[parseInt(d)] || "";
                     });
 
-                    let cmds = value.replace("\r", "").split("\n");
+                    const cmds = value.replace("\r", "").split("\n");
                     GlEvent.triggerSendCommands.fire(cmds);
                 }
             } else {
                 if (line.includes(trig.pattern)) {
                     if (trig.is_script) {
-                        let script = this.jsScript.makeScript(trig.value);
+                        const script = this.jsScript.makeScript(trig.value);
                         if (script) { script(); };
                     } else {
-                        let cmds = trig.value.replace("\r", "").split("\n");
+                        const cmds = trig.value.replace("\r", "").split("\n");
                         GlEvent.triggerSendCommands.fire(cmds);
                     }
                 }

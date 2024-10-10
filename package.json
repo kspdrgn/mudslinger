@@ -20,6 +20,7 @@
     "build": "npm run build-client && npm run build-server",
     "build-client": "tsc -p ts/tsconfig.client.json && rollup -c ts/rollup.config.js",
     "build-server": "tsc -p ts/tsconfig.server.json",
+    "vite": "vite --config vite.config.js",
     "lint": "tslint -c ts/tslint.json ts/src/client/*.ts && tslint -c ts/tslint.json ts/src/server/*.ts",
     "watch": "npm-watch"
   },
@@ -35,7 +36,8 @@
     "rimraf": "^6.0.1",
     "rollup": "^0.41.4",
     "tslint": "^6.1.3",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.2",

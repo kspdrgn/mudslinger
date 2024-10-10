@@ -28,11 +28,12 @@ export class TriggerEditor extends TrigAlEditBase {
         + "For regex triggers, 'match' will be the javascript match array, with \n"
         + "indices according to match groups.\n";
 
-    protected defaultPattern: string = null;
+    protected defaultPattern: string | undefined = undefined;
 
     protected getList() {
         let triggers = this.triggerManager.triggers;
-        let lst = [];
+        let lst: string[] = [];
+        if (!triggers) return lst;
         for (let i = 0; i < triggers.length; i++) {
             lst.push(triggers[i].pattern);
         }
@@ -42,14 +43,16 @@ export class TriggerEditor extends TrigAlEditBase {
 
     protected getItem(ind: number) {
         let triggers = this.triggerManager.triggers;
-        if (ind < 0 || ind >= triggers.length) {
-            return null;
+        if (!triggers || ind < 0 || ind >= triggers.length) {
+            return;
         } else {
             return triggers[ind];
         }
     }
 
     protected saveItem(ind: number, pattern: string, value: string, regex: boolean, is_script: boolean) {
+        if (!this.triggerManager.triggers)
+            return;
         let trig = {
             pattern: pattern,
             value: value,
@@ -67,7 +70,7 @@ export class TriggerEditor extends TrigAlEditBase {
     }
 
     protected deleteItem(ind: number) {
-        this.triggerManager.triggers.splice(ind, 1);
+        this.triggerManager.triggers?.splice(ind, 1);
         this.triggerManager.saveTriggers();
     }
 }

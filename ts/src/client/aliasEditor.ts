@@ -1,5 +1,5 @@
 import { AliasManager } from "./aliasManager";
-import { TrigAlEditBase } from "./trigAlEditBase";
+import { TrigAlEditBase, TrigAlItem } from "./trigAlEditBase";
 
 export class AliasEditor extends TrigAlEditBase {
     constructor(private aliasManager: AliasManager) {
@@ -8,7 +8,7 @@ export class AliasEditor extends TrigAlEditBase {
         aliasManager.evtAliasesChanged.handle(this.onDataChange, this);
     }
 
-    protected defaultPattern: string = null;
+    protected defaultPattern: string | undefined = undefined;
 
     protected defaultValue: string = "Put the alias value here.\n"
             + "This can be 1 or more commands, including match parameters (e.g. $1).\n\n"
@@ -33,7 +33,7 @@ export class AliasEditor extends TrigAlEditBase {
 
     protected getList() {
         let aliases = this.aliasManager.aliases;
-        let lst = [];
+        let lst: string[] = [];
         for (let i = 0; i < aliases.length; i++) {
             lst.push(aliases[i].pattern);
         }
@@ -44,7 +44,7 @@ export class AliasEditor extends TrigAlEditBase {
     protected getItem(ind: number) {
         let aliases = this.aliasManager.aliases;
         if (ind < 0 || ind >= aliases.length) {
-            return null;
+            return;
         } else {
             return aliases[ind];
         }

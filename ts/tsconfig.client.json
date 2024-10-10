@@ -8,13 +8,17 @@
                 "node_modules/*"
             ]
         },
-        "target": "es6",
+        "target": "ESNext",
+        "isolatedModules": true,
+        // "isolatedModules" is for Vite: It is because esbuild only performs transpilation without type information, it doesn't support certain features like const enum and implicit type-only imports. You must set "isolatedModules": true in your tsconfig.json under compilerOptions, so that TS will warn you against the features that do not work with isolated transpilation.
+        // If a dependency doesn't work well with "isolatedModules": true. You can use "skipLibCheck": true to temporarily suppress the errors until it is fixed upstream.
         "outDir": "./build/build_client",
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "esModuleInterop": true,
         "module": "esnext",
         "sourceMap": true,
+        "useDefineForClassFields": true,
         "moduleResolution": "node"
     },
     "include": [

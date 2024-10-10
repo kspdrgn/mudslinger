@@ -1,6 +1,7 @@
 import * as Util from "./util";
-
-declare let CodeMirror: any;
+import { javascript as codemirrorJavascript } from "@codemirror/lang-javascript";
+import { basicSetup, EditorView } from "codemirror";
+import { EditorState } from "@codemirror/state";
 
 export interface TrigAlItem {
     pattern: string;
@@ -18,7 +19,7 @@ export abstract class TrigAlEditBase {
     protected $scriptCheckbox: JQuery<Element>;
     protected $textArea: JQuery<Element>;
     protected $scriptArea: JQuery<Element>;
-    protected codeMirror: any;
+    protected codeMirror: EditorView;
     protected $codeMirrorWrapper: JQuery<Element>;
     protected $newButton: JQuery<Element>;
     protected $deleteButton: JQuery<Element>;
@@ -28,11 +29,11 @@ export abstract class TrigAlEditBase {
 
     /* these need to be overridden */
     protected abstract getList(): Array<string>;
-    protected abstract getItem(ind: number): TrigAlItem;
+    protected abstract getItem(ind: number): TrigAlItem | undefined;
     protected abstract saveItem(ind: number, pattern: string, value: string, checked: boolean, is_script: boolean): void;
     protected abstract deleteItem(ind: number): void;
 
-    protected abstract get defaultPattern(): string;
+    protected abstract get defaultPattern(): string | undefined;
     protected abstract get defaultValue(): string;
     protected abstract get defaultScript(): string;
 
@@ -107,18 +108,25 @@ export abstract class TrigAlEditBase {
             panels: [{ size: "25%" }, { size: "75%" }]
         });
 
-        this.codeMirror = CodeMirror.fromTextArea(
+        const codemirrorState = EditorState.create({});
+
+        this.codeMirror = new EditorView({
+            state: codemirrorState,
+            extensions: [basicSetup, codemirrorJavascript()],
+            parent: this.$scriptArea[0],
+        });
+        /*
             this.$scriptArea[0], {
             mode: "javascript",
             theme: "neat",
             autoRefresh: true, // https://github.com/codemirror/CodeMirror/issues/3098
             matchBrackets: true,
             lineNumbers: true
-        }
-        );
+        });
         this.$codeMirrorWrapper = $(this.codeMirror.getWrapperElement());
         this.$codeMirrorWrapper.height("100%");
         this.$codeMirrorWrapper.hide();
+        */
 
         this.$listBox.change(this.handleListBoxChange.bind(this));
         this.$newButton.click(this.handleNewButtonClick.bind(this));
@@ -164,10 +172,16 @@ export abstract class TrigAlEditBase {
         let ind = this.$listBox.prop("selectedIndex");
         let is_script = this.$scriptCheckbox.is(":checked");
 
+        const str = is_script
+            ? this.codeMirror.state.doc.toString()
+            : this.$textArea.val()?.toString();
+        if (!str)
+            throw 'Error in save';
+
         this.saveItem(
             ind,
             this.$pattern.val() as string,
-            is_script ? this.codeMirror.getValue() : this.$textArea.val(),
+            str,
             this.$regexCheckbox.is(":checked"),
             is_script
         );
@@ -189,7 +203,11 @@ export abstract class TrigAlEditBase {
         this.selectNone();
         this.$pattern.val(this.defaultPattern || "INPUT PATTERN HERE");
         this.$textArea.val(this.defaultValue || "INPUT VALUE HERE");
-        this.codeMirror.setValue(this.defaultScript || "// INPUT SCRIPT HERE");
+        this.codemirrorInsert(this.defaultScript || "// INPUT SCRIPT HERE" );
+    }
+
+    protected codemirrorInsert(val: string) {
+        this.codeMirror.state.update({ changes: { from: 0, insert: val } });
     }
 
     private handleDeleteButtonClick() {
@@ -206,7 +224,7 @@ export abstract class TrigAlEditBase {
     private showScriptInput() {
         this.$textArea.hide();
         this.$codeMirrorWrapper.show();
-        this.codeMirror.refresh();
+        //this.codeMirror.refresh();
     }
 
     private showTextInput() {
@@ -225,12 +243,12 @@ export abstract class TrigAlEditBase {
         this.$pattern.val(item.pattern);
         if (item.is_script) {
             this.showScriptInput();
-            this.codeMirror.setValue(item.value);
+            this.codemirrorInsert(item.value);
             this.$textArea.val("");
         } else {
             this.showTextInput();
             this.$textArea.val(item.value);
-            this.codeMirror.setValue("");
+            this.codemirrorInsert("");
         }
         this.$regexCheckbox.prop("checked", item.regex ? true : false);
         this.$scriptCheckbox.prop("checked", item.is_script ? true : false);

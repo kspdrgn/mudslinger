@@ -1,7 +1,7 @@
 import { GlEvent, GlDef } from "./event";
 
 function makeScript(text: string) {
-    let _scriptFunc_: (match: any) => void;
+    let _scriptFunc_: (match: any) => void = () => {};
     /* Scripting API section */
     let send = function(cmd: string) {
         GlEvent.scriptSendCommand.fire({value: cmd});

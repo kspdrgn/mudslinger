@@ -10,11 +10,11 @@ export class AliasManager {
     public evtAliasesChanged = new EventHook<void>();
 
     private enabled: boolean = true;
-    public aliases: Array<TrigAlItem> = null;
+    public aliases: Array<TrigAlItem> = [];
 
     constructor(private jsScript: JsScript) {
         /* backward compatibility */
-        let savedAliases: string = localStorage.getItem("aliases");
+        const savedAliases = localStorage.getItem("aliases");
         if (savedAliases) {
             UserConfig.set("aliases", JSON.parse(savedAliases));
             localStorage.removeItem("aliases");
@@ -37,7 +37,7 @@ export class AliasManager {
     private handleConfigImport(imp: {[k: string]: any}) {
         this.aliases = this.aliases.concat(imp["aliases"] || []);
         this.saveAliases();
-        this.evtAliasesChanged.fire(null);
+        this.evtAliasesChanged.fire();
     }
 
     private handleSetAliasesEnabled(value: boolean) {
@@ -47,8 +47,9 @@ export class AliasManager {
     // return the result of the alias if any (string with embedded lines)
     // return true if matched and script ran
     // return null if no match
-    public checkAlias(cmd: string): boolean | string {
-        if (!this.enabled) return null;
+    public checkAlias(cmd: string): boolean | string | undefined {
+        if (!this.enabled)
+            return;
 
         for (let i = 0; i < this.aliases.length; i++) {
             let alias = this.aliases[i];
@@ -89,6 +90,6 @@ export class AliasManager {
                 }
             }
         }
-        return null;
+        return;
     };
 }
