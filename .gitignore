@@ -7,3 +7,4 @@ static/configClient.js
 static/jquery.min.js
 static/mudslinger.js
 static/socket.io.min.js
+.vs/

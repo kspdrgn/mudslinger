@@ -80,14 +80,15 @@ export class Client {
     }
 
     private loadLayout() {
-        $(window).resize(() => {
+        $(window).on('resize', () => {
             this.checkResize();
         });
         this.checkResize();
     }
 
     private checkResize() {
-        if ($(window).width() >= 992) {
+        const w = $(window).width() ?? 0;
+        if (w >= 992) {
             (<any>this.menuBar.$menuBar).jqxMenu('restore');
         } else {
             (<any>this.menuBar.$menuBar).jqxMenu('minimize');

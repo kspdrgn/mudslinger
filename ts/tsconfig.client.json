@@ -1,17 +1,26 @@
 {
     "compilerOptions": {
+        "rootDir": ".",
         "baseUrl": ".",
+        "paths": {
+            "*": [
+                "./src/client/*",
+                "node_modules/*"
+            ]
+        },
         "target": "es6",
         "outDir": "./build/build_client",
         "noImplicitAny": true,
         "noImplicitReturns": true,
+        "esModuleInterop": true,
         "module": "esnext",
+        "sourceMap": true,
         "moduleResolution": "node"
     },
-    "exclude": [
-        "node_modules"
-    ],
     "include": [
-        "./src/client/*"
-    ]
+        "./src/client/*",
+    ],
+    "exclude": [
+        //"node_modules"
+    ],
 }

@@ -1,15 +1,15 @@
 {
     "compilerOptions": {
         "allowSyntheticDefaultImports": true,
+        "rootDir": ".",
         "baseUrl": ".",
         "paths": {
             "*": [
                 "./src/server/*",
-                //"../node_modules/*",
+                "../node_modules/*",
                 "/definitions/*"
             ],
         },
-        "rootDir": ".",
         "esModuleInterop": true,
         "module": "ESNext",
         "moduleResolution": "Node",

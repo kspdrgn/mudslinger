@@ -82,7 +82,7 @@ telnetNs.on("connection", (client: socketio.Socket) => {
 
         if (serverConfig.targetHost != null) {
             host = serverConfig.targetHost;
-            port = serverConfig.targetPort;
+            port = serverConfig.targetPort ?? 0;
         } else {
             host = args[0];
             port = args[1];

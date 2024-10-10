@@ -3,16 +3,16 @@ import fs from "fs-extra";
 let flnameConfigClient = "configClient.js"
 let flnameConfigClientDefault = "configClient.default.js"
 
-let flnameConfigServer = "ts/configServer.js"
-let flnameConfigServerDefault = "ts/configServer.default.js"
+let flnameConfigServer = "configServer.js"
+let flnameConfigServerDefault = "configServer.default.js"
 
 // To be run from package root, paths accordingly
-fs.createReadStream("node_modules/socket.io-client/dist/socket.io.min.js").pipe(fs.createWriteStream('static/socket.io.min.js'));
+fs.createReadStream("node_modules/socket.io/client-dist/socket.io.min.js").pipe(fs.createWriteStream('static/socket.io.min.js'));
 fs.createReadStream("node_modules/jquery/dist/jquery.min.js").pipe(fs.createWriteStream('static/jquery.min.js'));
 
 fs.copySync("node_modules/jqwidgets-framework/jqwidgets", "static/jqwidgets");
 
-//fs.copySync("node_modules/codemirror/addon", "static/codemirror/addon");
+fs.copySync("node_modules/@codemirror/theme-one-dark/dist/index.js", "static/codemirror/theme-one-dark.js");
 //fs.copySync("node_modules/codemirror/keymap", "static/codemirror/keymap");
 //fs.copySync("node_modules/codemirror/lib", "static/codemirror/lib");
 //fs.copySync("node_modules/codemirror/mode", "static/codemirror/mode");

@@ -27,7 +27,7 @@ export class Socket {
     public open() {
         const url = `http://${configClient.socketIoHost || document.domain}:${configClient.socketIoPort || location.port}/telnet`;
         const m = new Manager(url);
-        const i = m.socket("/telnet") as SocketIOSocket;
+        const i = m.socket("/telnet");
         this.ioConn = i.connect();
 
         this.ioConn.on("connect", () => {
@@ -91,7 +91,7 @@ export class Socket {
         });
     }
 
-    public openTelnet(host: string | null, port: number) {
+    public openTelnet(host: string | null, port: number | null) {
         if (host === null || !port)
             return;
         this.ioEvt.clReqTelnetOpen.fire([host, port]);

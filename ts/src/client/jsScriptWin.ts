@@ -1,10 +1,10 @@
 import { JsScript } from "./jsScript";
-
-declare let CodeMirror: any;
+import { EditorView, basicSetup } from 'codemirror'; 
+import { javascript } from "@codemirror/lang-javascript";
 
 export class JsScriptWin {
     private $win: JQuery;
-    private codeMirror: any = null;
+    private codeMirror: EditorView;
     private $runButton: JQuery;
 
     constructor(private jsScript: JsScript) {
@@ -38,21 +38,26 @@ export class JsScriptWin {
             (<any>$('.jqx-window-modal')).removeClass("force-hidden");
         });
 
-        this.codeMirror = CodeMirror.fromTextArea(
-            win.getElementsByClassName("winJsScript-code")[0], {
+        const el = win.getElementsByClassName("winJsScript-code")[0];
+        this.codeMirror = new EditorView({
+            extensions: [basicSetup, javascript()],
+            parent: el,
+        });
+
+        /*CodeMirror.fromTextArea(
+            el, {
             mode: "javascript",
             theme: "neat",
             autoRefresh: true, // https://github.com/codemirror/CodeMirror/issues/3098
             matchBrackets: true,
             lineNumbers: true
-        }
-        );
+        });*/
 
         this.$runButton.click(this.handleRunButtonClick.bind(this));
     }
 
     private handleRunButtonClick() {
-        let code_text = this.codeMirror.getValue();
+        let code_text = this.codeMirror.state.doc.toString();
         let script = this.jsScript.makeScript(code_text);
         if (script) { script(); };
     }
