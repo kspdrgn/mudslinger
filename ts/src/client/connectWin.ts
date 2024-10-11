@@ -22,10 +22,10 @@ export class ConnectWin {
         <!--content-->
         <div>
             Host: 
-            <input class="winConnect-inputHost" placeholder="123.123.123.123">
+            <input class="winConnect-inputHost" placeholder="123.123.123.123" value="127.0.0.1">
             <br>
             Port:
-            <input class="winConnect-inputPort" placeholder="7000">
+            <input class="winConnect-inputPort" placeholder="8080" value="2069">
             <br>
             <button class="winConnect-btnConnect">CONNECT</button>
         </div>
@@ -54,6 +54,8 @@ export class ConnectWin {
     private handleConnectButtonClick() {
         let host: string = (this.$hostInput.val() as string).trim();
         let port: number = +((this.$portInput.val() as string).trim());
+
+        console.debug(`Connect click: ${host}:${port}`);
 
         this.socket.openTelnet(host, port);
 

@@ -27,8 +27,10 @@ export class Socket {
     public open() {
         const host = configClient.socketIoHost || document.domain;
         const port = configClient.socketIoPort || location.port;
-        const url = `http://${host}:${port}/telnet`;
-        const m = new Manager(url, {
+        //const url = `http://${host}:${port}/telnet`;
+        //const url = `${host}:${port}`;
+        const m = new Manager(host, {
+            port,
             autoConnect: false,
         });
         const i = m.socket("/telnet");
