@@ -32,7 +32,7 @@ export class TelnetClient extends Telnet {
             } else if (opt === Opt.SGA) {
                 this.writeArr([Cmd.IAC, Cmd.DO, Opt.SGA]);
             } else {
-                this.writeArr([Cmd.IAC, Cmd.DONT, opt]);
+                this.writeArr([Cmd.IAC, Cmd.DONT, opt!]);
             }
         } else if (cmd === Cmd.WONT) {
             if (opt === Opt.ECHO) {
@@ -44,7 +44,7 @@ export class TelnetClient extends Telnet {
             } else if (opt === ExtOpt.MXP) {
                 this.writeArr([Cmd.IAC, Cmd.WILL, ExtOpt.MXP]);
             } else {
-                this.writeArr([Cmd.IAC, Cmd.WONT, opt]);
+                this.writeArr([Cmd.IAC, Cmd.WONT, opt!]);
             }
         } else if (cmd === Cmd.SE) {
             let sb = this.readSbArr();

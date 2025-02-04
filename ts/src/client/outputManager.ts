@@ -20,11 +20,11 @@ export class OutputManager {
 
     private ansiReverse = false;
 
-    private ansiFg: ansiColorTuple;
-    private ansiBg: ansiColorTuple;
+    private ansiFg: ansiColorTuple | null;
+    private ansiBg: ansiColorTuple | null;
 
-    private fgColor: string;
-    private bgColor: string;
+    private fgColor: string | null;
+    private bgColor: string | null;
 
     private defaultAnsiFg: ansiColorTuple = ["green", "low"];
     private defaultAnsiBg: ansiColorTuple = ["black", "low"];
@@ -88,22 +88,22 @@ export class OutputManager {
         this.target.addText(data);
     }
 
-    private setFgColor(color: string) {
+    private setFgColor(color: string | null) {
         this.fgColor = color;
         this.target.setFgColor(color);
     }
 
-    private setAnsiFg(color: ansiColorTuple) {
+    private setAnsiFg(color: ansiColorTuple | null) {
         this.ansiFg = color;
         this.setFgColor(this.ansiFg ? (ansiColors[this.ansiFg[0]][this.ansiFg[1]]) : null);
     }
 
-    private setBgColor(color: string) {
+    private setBgColor(color: string | null) {
         this.bgColor = color;
         this.target.setBgColor(color);
     }
 
-    private setAnsiBg(color: ansiColorTuple) {
+    private setAnsiBg(color: ansiColorTuple | null) {
         this.ansiBg = color;
         this.setBgColor(this.ansiBg ? (ansiColors[this.ansiBg[0]][this.ansiBg[1]]) : null);
     }
@@ -135,8 +135,8 @@ export class OutputManager {
 
     /* handles graphics mode codes http://ascii-table.com/ansi-escape-sequences.php*/
     public handleAnsiGraphicCodes(codes: Array<string>) {
-        let new_fg: ansiColorTuple;
-        let new_bg: ansiColorTuple;
+        let new_fg: ansiColorTuple | null = null;
+        let new_bg: ansiColorTuple | null = null;
 
         for (let i = 0; i < codes.length; i++) {
 

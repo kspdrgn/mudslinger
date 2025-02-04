@@ -2,7 +2,7 @@ import { EventHook } from "./event";
 
 export interface NegotiationData {
     cmd: number;
-    opt: number;
+    opt: number | null;
 }
 
 export class Telnet {

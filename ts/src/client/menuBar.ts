@@ -72,7 +72,7 @@ export class MenuBar {
     private makeClickFuncs() {
         this.clickFuncs["Connect"] = () => {
             if (configClient.hardcodedTarget === true) {
-                this.socket.openTelnet(null, null);
+                this.socket.openTelnet(null!, null!);
             } else {
                 $('.jqx-window-modal').removeClass("force-hidden");
                 this.connectWin.show();

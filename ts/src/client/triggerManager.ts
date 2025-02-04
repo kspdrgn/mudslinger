@@ -10,7 +10,7 @@ export class TriggerManager {
     public evtTriggersChanged = new EventHook<void>();
 
     private enabled: boolean = true;
-    public triggers: Array<TrigAlItem> = null;
+    public triggers: Array<TrigAlItem> = [];
 
     constructor(private jsScript: JsScript) {
         /* backward compatibility */
@@ -37,7 +37,7 @@ export class TriggerManager {
     private handleConfigImport(imp: {[k: string]: any}) {
         this.triggers = this.triggers.concat(imp["triggers"] || []);
         this.saveTriggers();
-        this.evtTriggersChanged.fire(null);
+        this.evtTriggersChanged.fire();
     }
 
     private handleSetTriggersEnabled(data: GlDef.SetTriggersEnabledData) {

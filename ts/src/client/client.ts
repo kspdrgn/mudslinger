@@ -73,7 +73,7 @@ export class Client {
 
         this.socket.open();
         if (configClient.hardcodedTarget === true) {
-            this.socket.openTelnet(null, null);
+            this.socket.openTelnet(null!, null!);
         } else {
             this.connectWin.show();
         }

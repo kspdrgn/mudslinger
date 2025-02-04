@@ -22,10 +22,10 @@ export class ConnectWin {
         <!--content-->
         <div>
             Host: 
-            <input class="winConnect-inputHost" placeholder="123.123.123.123">
+            <input class="winConnect-inputHost" placeholder="123.123.123.123" value="127.0.0.1">
             <br>
             Port:
-            <input class="winConnect-inputPort" placeholder="7000">
+            <input class="winConnect-inputPort" placeholder="7000" value="2069">
             <br>
             <button class="winConnect-btnConnect">CONNECT</button>
         </div>

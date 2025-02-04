@@ -28,7 +28,7 @@ export abstract class TrigAlEditBase {
 
     /* these need to be overridden */
     protected abstract getList(): Array<string>;
-    protected abstract getItem(ind: number): TrigAlItem;
+    protected abstract getItem(ind: number): TrigAlItem | undefined;
     protected abstract saveItem(ind: number, pattern: string, value: string, checked: boolean, is_script: boolean): void;
     protected abstract deleteItem(ind: number): void;
 
@@ -215,7 +215,7 @@ export abstract class TrigAlEditBase {
     }
 
     private handleListBoxChange() {
-        let ind = this.$listBox.prop("selectedIndex");
+        let ind = +this.$listBox.prop("selectedIndex");
         let item = this.getItem(ind);
 
         if (!item) {

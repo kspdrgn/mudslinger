@@ -8,7 +8,7 @@ export class AliasEditor extends TrigAlEditBase {
         aliasManager.evtAliasesChanged.handle(this.onDataChange, this);
     }
 
-    protected defaultPattern: string = null;
+    protected defaultPattern: string = '';
 
     protected defaultValue: string = "Put the alias value here.\n"
             + "This can be 1 or more commands, including match parameters (e.g. $1).\n\n"
@@ -33,18 +33,18 @@ export class AliasEditor extends TrigAlEditBase {
 
     protected getList() {
         let aliases = this.aliasManager.aliases;
-        let lst = [];
-        for (let i = 0; i < aliases.length; i++) {
-            lst.push(aliases[i].pattern);
+        let lst: string[] = [];
+        const l = aliases?.length ?? 0;
+        for (let i = 0; i < l; i++) {
+            lst.push(aliases![i].pattern);
         }
-
         return lst;
     }
 
     protected getItem(ind: number) {
         let aliases = this.aliasManager.aliases;
         if (ind < 0 || ind >= aliases.length) {
-            return null;
+            return undefined;
         } else {
             return aliases[ind];
         }

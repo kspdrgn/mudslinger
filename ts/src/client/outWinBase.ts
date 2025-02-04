@@ -20,14 +20,14 @@ export class OutWinBase {
         this.maxLines = count;
     }
 
-    private fgColor: string;
-    private bgColor: string;
+    private fgColor: string | null;
+    private bgColor: string | null;
 
-    public setFgColor(color: string) {
+    public setFgColor(color: string | null) {
         this.fgColor = color;
     }
 
-    public setBgColor(color: string) {
+    public setBgColor(color: string | null) {
         this.bgColor = color;
     };
 

@@ -1,20 +1,20 @@
 class IoEventHook<TData> {
-    constructor(private ioObj: any, private evtName: string) {
-
-    }
+    constructor(private readonly ioObj: any, private readonly evtName: string) {}
     
     public handle(callback: (data: TData) => void) {
-        return this.ioObj.on(this.evtName, callback);
+        return this.ioObj?.on(this.evtName, callback);
     }
 
     public fire(data: TData): boolean {
-        return this.ioObj.emit(this.evtName, data);
+        return this.ioObj?.emit(this.evtName, data);
     }
 }
 
 export class IoEvent {
-    constructor(private ioOobj: any) {
+    constructor(_ioOobj: any) {
+        this.ioOobj = _ioOobj;
     }
+    private readonly ioOobj: any = undefined
 
     public srvTelnetData = new IoEventHook<ArrayBuffer>(this.ioOobj, "srvTelnetData");
     public srvTelnetClosed = new IoEventHook<boolean>(this.ioOobj, "srvTelnetClosed");

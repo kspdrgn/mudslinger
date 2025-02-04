@@ -28,22 +28,21 @@ export class TriggerEditor extends TrigAlEditBase {
         + "For regex triggers, 'match' will be the javascript match array, with \n"
         + "indices according to match groups.\n";
 
-    protected defaultPattern: string = null;
+    protected defaultPattern = '';
 
     protected getList() {
         let triggers = this.triggerManager.triggers;
-        let lst = [];
+        let lst: string[] = [];
         for (let i = 0; i < triggers.length; i++) {
             lst.push(triggers[i].pattern);
         }
-
         return lst;
     }
 
     protected getItem(ind: number) {
         let triggers = this.triggerManager.triggers;
         if (ind < 0 || ind >= triggers.length) {
-            return null;
+            return undefined;
         } else {
             return triggers[ind];
         }
