@@ -1,5 +1,9 @@
 {
   "name": "mudslinger",
+  "engines": {
+    "node": ">=20",
+    "npm": ">=10"
+  },
   "watch": {
     "build-client": {
       "patterns": [
