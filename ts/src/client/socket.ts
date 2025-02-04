@@ -11,9 +11,9 @@ declare let configClient: any;
 
 
 export class Socket {
-    private ioConn: SocketIOClient.Socket;
+    private ioConn: io.Socket;
     private ioEvt: IoEvent;
-    private telnetClient: TelnetClient;
+    private telnetClient?: TelnetClient;
     private clientIp: string;
 
     constructor(private outputManager: OutputManager, private mxp: Mxp) {
@@ -33,11 +33,11 @@ export class Socket {
             "/telnet");
 
         this.ioConn.on("connect", () => {
-            GlEvent.wsConnect.fire(null);
+            GlEvent.wsConnect.fire();
         });
 
         this.ioConn.on("disconnect", () => {
-            GlEvent.wsDisconnect.fire(null);
+            GlEvent.wsDisconnect.fire();
         });
 
         this.ioConn.on("error", (msg: any) => {
@@ -61,12 +61,12 @@ export class Socket {
                 GlEvent.setEcho.fire(!data);
             });
 
-            GlEvent.telnetConnect.fire(null);
+            GlEvent.telnetConnect.fire();
         });
 
         this.ioEvt.srvTelnetClosed.handle(() => {
-            this.telnetClient = null;
-            GlEvent.telnetDisconnect.fire(null);
+            this.telnetClient = undefined;
+            GlEvent.telnetDisconnect.fire();
         });
 
         this.ioEvt.srvTelnetError.handle((data) => {
@@ -93,12 +93,12 @@ export class Socket {
         });
     }
 
-    public openTelnet(host: string | null, port: number) {
+    public openTelnet(host: string, port: number) {
         this.ioEvt.clReqTelnetOpen.fire([host, port]);
     }
 
     public closeTelnet() {
-        this.ioEvt.clReqTelnetClose.fire(null);
+        this.ioEvt.clReqTelnetClose.fire();
     }
 
     private sendCmd(cmd: string) {
@@ -130,13 +130,13 @@ export class Socket {
         }
     };
 
-    private partialSeq: string;
+    private partialSeq?: string;
     private handleTelnetData(data: ArrayBuffer) {
         // console.timeEnd("command_resp");
         // console.time("_handle_telnet_data");
 
         let rx = this.partialSeq || "";
-        this.partialSeq = null;
+        this.partialSeq = undefined;
         rx += String.fromCharCode.apply(String, new Uint8Array(data));
 
         let output = "";
