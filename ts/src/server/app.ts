@@ -12,19 +12,19 @@ let cwd = process.cwd();
 
 let app: express.Express;
 let server: http.Server;
-let io: SocketIO.Server;
+let io: socketio.Server;
 
 if (serverConfig.useHttpServer === true) {
     app = express();
     server = http.createServer(app);
-    io = socketio(server);
+    io = new socketio.Server(server);
 } else {
-    io = socketio(serverConfig.serverPort);
+    io = new socketio.Server(serverConfig.serverPort);
 }
 
-let telnetNs: SocketIO.Namespace = io.of("/telnet");
-telnetNs.on("connection", (client: SocketIO.Socket) => {
-    let telnet: net.Socket;
+let telnetNs: socketio.Namespace = io.of("/telnet");
+telnetNs.on("connection", (client: socketio.Socket) => {
+    let telnet: net.Socket | undefined;
     let ioEvt = new IoEvent(client);
 
     let writeQueue: any[] = [];
@@ -35,7 +35,7 @@ telnetNs.on("connection", (client: SocketIO.Socket) => {
         if (writeQueue.length > 0) {
             let data = writeQueue.shift();
             canWrite = false;
-            canWrite = telnet.write(data as Buffer);
+            canWrite = telnet!.write(data as Buffer);
         }
     };
 
@@ -47,7 +47,7 @@ telnetNs.on("connection", (client: SocketIO.Socket) => {
     client.on("disconnect", () => {
         if (telnet) {
             telnet.end();
-            telnet = null;
+            telnet = undefined;
         }
     });
 
@@ -57,7 +57,7 @@ telnetNs.on("connection", (client: SocketIO.Socket) => {
         let host: string;
         let port: number;
 
-        if (serverConfig.targetHost != null) {
+        if (serverConfig.targetHost?.length) {
             host = serverConfig.targetHost;
             port = serverConfig.targetPort;
         } else {
@@ -70,7 +70,7 @@ telnetNs.on("connection", (client: SocketIO.Socket) => {
         });
         telnet.on("close", (had_error: boolean) => {
             ioEvt.srvTelnetClosed.fire(had_error);
-            telnet = null;
+            telnet = undefined;
         });
         telnet.on("drain", () => {
             canWrite = true;
@@ -83,11 +83,11 @@ telnetNs.on("connection", (client: SocketIO.Socket) => {
 
         try {
             console.log(
-                client.request.connection.remoteAddress
+                client.request.socket.remoteAddress
                 + " connecting to "
                 + host + ":" + port);
             telnet.connect(port, host, () => {
-                ioEvt.srvTelnetOpened.fire(null);
+                ioEvt.srvTelnetOpened.fire();
             });
         }
         catch (err) {
@@ -97,20 +97,20 @@ telnetNs.on("connection", (client: SocketIO.Socket) => {
     });
 
     ioEvt.clReqTelnetClose.handle(() => {
-        if (telnet == null) { return; }
+        if (!telnet) { return; }
         telnet.end();
-        telnet = null;
+        telnet = undefined;
     });
 
     ioEvt.clReqTelnetWrite.handle((data) => {
-        if (telnet == null) { return; }
+        if (!telnet) { return; }
         writeData(data);
     });
 
-    ioEvt.srvSetClientIp.fire(client.request.connection.remoteAddress);
+    ioEvt.srvSetClientIp.fire(client.request.socket.remoteAddress!);
 });
 
-if (serverConfig.useHttpServer) {
+if (serverConfig.useHttpServer && app! && server!) {
     app.use(express.static("static"));
 
     app.get("/", function(req, res) {
