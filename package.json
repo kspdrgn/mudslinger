@@ -16,7 +16,7 @@
   },
   "scripts": {
     "prestart": "node tools/prestart.js",
-    "start": "npm install && npm run prestart && npm run build && npm run start-server",
+    "start": "npm run node-setup && npm run prestart && npm run build && npm run start-server",
     "start-server": "node dist/server/app.js",
     "postinstall": "node tools/postinstall.js",
     "clean": "rimraf ts/build && rimraf dist && rimraf static/mudslinger.js",
@@ -25,6 +25,7 @@
     "build-server": "tsc -p ts/tsconfig.server.json",
     "lint": "tslint -c ts/tslint.json ts/src/client/*.ts && tslint -c ts/tslint.json ts/src/server/*.ts",
     "lint-fix": "tslint --fix -c ts/tslint.json ts/src/client/*.ts && tslint --fix -c ts/tslint.json ts/src/server/*.ts",
+    "node-setup": "node -v && npm -v && npm install",
     "watch": "npm-watch"
   },
   "dependencies": {
@@ -41,7 +42,7 @@
     "@types/node": "20.17.17",
     "@types/socket.io": "^1.4.27",
     "@types/socket.io-client": "^1.4.29",
-    "fs-extra": "^2.1.2",
+    "fs-extra": "^11.3.0",
     "npm-watch": "^0.13.0",
     "rimraf": "^6.0.1",
     "rollup": "^0.68.2",
