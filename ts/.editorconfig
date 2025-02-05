@@ -1,0 +1,12 @@
+# EditorConfig is awesome: https://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+# All files:
+[*.{ts,js}]
+# end_of_line = crlf # may conflict if other devs are using linux to edit.
+insert_final_newline = true # newline ending every file
+charset = utf-8
+indent_style = tab
+indent_size = 4
