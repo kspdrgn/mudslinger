@@ -24,6 +24,7 @@
     "build-client": "tsc -p ts/tsconfig.client.json && rollup -c ts/rollup.config.js",
     "build-server": "tsc -p ts/tsconfig.server.json",
     "lint": "tslint -c ts/tslint.json ts/src/client/*.ts && tslint -c ts/tslint.json ts/src/server/*.ts",
+    "lint-fix": "tslint --fix -c ts/tslint.json ts/src/client/*.ts && tslint --fix -c ts/tslint.json ts/src/server/*.ts",
     "watch": "npm-watch"
   },
   "dependencies": {
