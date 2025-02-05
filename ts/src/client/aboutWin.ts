@@ -1,15 +1,15 @@
-import { AppInfo } from "./appInfo";
+import { AppInfo } from './appInfo';
 
 export class AboutWin {
-    private $win: JQuery;
+	private $win: JQuery;
 
-    constructor() {
-        let win = document.createElement("div");
-        win.style.display = "none";
-        win.className = "winAbout";
-        document.body.appendChild(win);
+	constructor() {
+		let win = document.createElement('div');
+		win.style.display = 'none';
+		win.className = 'winAbout';
+		document.body.appendChild(win);
 
-        win.innerHTML = `
+		win.innerHTML = `
         <!--header-->
         <div>ABOUT</div>
         <!--content-->
@@ -22,18 +22,18 @@ export class AboutWin {
         </div>
         `;
 
-        this.$win = $(win);
+		this.$win = $(win);
 
-        (<any>this.$win).jqxWindow({ width: '90%', height: 400, isModal: true });
-        this.$win.on('close', function () {
-            $('.jqx-window-modal').addClass("force-hidden");
-        });
-        this.$win.on('open', function () {
-            $('.jqx-window-modal').removeClass("force-hidden");
-        });
-    }
+		(<any>this.$win).jqxWindow({ width: '90%', height: 400, isModal: true });
+		this.$win.on('close', function () {
+			$('.jqx-window-modal').addClass('force-hidden');
+		});
+		this.$win.on('open', function () {
+			$('.jqx-window-modal').removeClass('force-hidden');
+		});
+	}
 
-    public show() {
-        (<any>this.$win).jqxWindow("open");
-    }
+	public show() {
+		(<any>this.$win).jqxWindow('open');
+	}
 }
